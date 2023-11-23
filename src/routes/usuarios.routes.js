@@ -13,4 +13,5 @@ router.get('/usuario/:id',ObtenerUsuarioID)
 // Endpoint para obtener lista de usuarios
 router.get('/listausuarios', ListaUsuarios)
 
+
 export default router
