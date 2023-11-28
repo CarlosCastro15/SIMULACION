@@ -134,13 +134,13 @@ const calcularNuevoPesoIMC = async (id_usuario, altura, semanas, peso_actual) =>
 
 
 // Endpoint para eliminar un usuario por ID
-export const EliminarUsuario =  (req, res) => {
+export const EliminarUsuario = (req, res) => {
   const userId = req.params.id;
 
   // Consulta SQL para eliminar el usuario por ID
-  const sql = 'DELETE FROM Usuarios WHERE id_usuario = ?';
+  const sqlDeleteUser = 'DELETE FROM Usuarios WHERE id_usuario = ?';
 
-  db.query(sql, [userId], (error, results) => {
+  db.query(sqlDeleteUser, [userId], (error, results) => {
     if (error) {
       console.error('Error al eliminar el usuario: ' + error.message);
       res.status(500).send('Error interno del servidor');
