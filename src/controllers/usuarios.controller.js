@@ -131,3 +131,23 @@ const calcularNuevoPesoIMC = async (id_usuario, altura, semanas, peso_actual) =>
     res.status(500).json({ error: 'Error al insertar en la base de datos' });
   }
 };
+
+
+// Endpoint para eliminar un usuario por ID
+export const EliminarUsuario = (req, res) => {
+  const userId = req.params.id;
+
+  const deleteUsuarioQuery = 'DELETE FROM Usuarios WHERE id_usuario = ?';
+  db.query(deleteUsuarioQuery, [userId], (err, result) => {
+    if (err) {
+      console.error('Error al eliminar el usuario:', err);
+      res.status(500).send('Error interno del servidor');
+    } else {
+      if (result.affectedRows > 0) {
+        res.status(200).send(`Usuario con ID ${userId} eliminado exitosamente`);
+      } else {
+        res.status(404).send(`Usuario con ID ${userId} no encontrado`);
+      }
+    }
+  });
+};

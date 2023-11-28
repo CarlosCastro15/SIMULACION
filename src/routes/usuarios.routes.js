@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { CrearUsuario,ObtenerUsuarioID,ListaUsuarios,CalcularICM } from '../controllers/usuarios.controller.js'
+import { CrearUsuario,ObtenerUsuarioID,ListaUsuarios,CalcularICM,EliminarUsuario } from '../controllers/usuarios.controller.js'
 import { db } from '../db.js'
 
 
@@ -17,6 +17,9 @@ router.get('/listausuarios', ListaUsuarios)
 
 //Calcular ICM y ponerlo en el historial
 router.post('/calcular-icm', CalcularICM)
+
+// Endpoint para eliminar un usuario por ID
+router.delete('/eliminarusuarios/:id', EliminarUsuario)
 
 
 export default router
