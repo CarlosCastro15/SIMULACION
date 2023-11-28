@@ -134,20 +134,24 @@ const calcularNuevoPesoIMC = async (id_usuario, altura, semanas, peso_actual) =>
 
 
 // Endpoint para eliminar un usuario por ID
-export const EliminarUsuario = (req, res) => {
+export const EliminarUsuario =  (req, res) => {
   const userId = req.params.id;
 
-  const deleteUsuarioQuery = 'DELETE FROM Usuarios WHERE id_usuario = ?';
-  db.query(deleteUsuarioQuery, [userId], (err, result) => {
-    if (err) {
-      console.error('Error al eliminar el usuario:', err);
+  // Consulta SQL para eliminar el usuario por ID
+  const sql = 'DELETE FROM Usuarios WHERE id_usuario = ?';
+
+  db.query(sql, [userId], (error, results) => {
+    if (error) {
+      console.error('Error al eliminar el usuario: ' + error.message);
       res.status(500).send('Error interno del servidor');
+      return;
+    }
+
+    if (results.affectedRows === 0) {
+      // No se encontró ningún usuario con el ID proporcionado
+      res.status(404).send('Usuario no encontrado');
     } else {
-      if (result.affectedRows > 0) {
-        res.status(200).send(`Usuario con ID ${userId} eliminado exitosamente`);
-      } else {
-        res.status(404).send(`Usuario con ID ${userId} no encontrado`);
-      }
+      res.status(200).send('Usuario eliminado exitosamente');
     }
   });
 };
